@@ -12,14 +12,11 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello uView',
+				title: '工具',
 				tabbar: ''
 			}
 		},
 		onLoad() {
-			/**
-			 * 示例中为每个tabbar页面都写了一遍tabbar变量，您可以将tabbar数组写入到vuex中，这样可以全局引用
-			 */
 			this.tabbar = [{
 					iconPath: "/static/uview/example/component.png",
 					selectedIconPath: "/static/uview/example/component_select.png",
