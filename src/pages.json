@@ -4,22 +4,31 @@
   },
   "pages": [
     //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+
+    {
+      "path": "pages/roomDetails/index",
+      "style": {
+        "navigationStyle": "custom", // 隐藏系统导航栏
+        "navigationBarTextStyle": "white", // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
+        "navigationBarTitleText": "房间详情"
+      }
+    },
     {
       "path": "pages/index/index",
       "style": {
-        "navigationBarTitleText": "uView UI"
+        "navigationBarTitleText": "首页"
       }
     },
     {
       "path": "pages/js/index",
       "style": {
-        "navigationBarTitleText": "工具"
+        "navigationBarTitleText": "扫码"
       }
     },
     {
-      "path": "pages/template/index",
+      "path": "pages/mine/index",
       "style": {
-        "navigationBarTitleText": "模板"
+        "navigationBarTitleText": "我的"
       }
     }
   ],
@@ -39,19 +48,19 @@
         "pagePath": "pages/index/index",
         "iconPath": "static/uview/example/component.png",
         "selectedIconPath": "static/uview/example/component_select.png",
-        "text": "组件"
+        "text": "首页"
       },
       {
         "pagePath": "pages/js/index",
         "iconPath": "static/uview/example/js.png",
         "selectedIconPath": "static/uview/example/js_select.png",
-        "text": "工具"
+        "text": "扫码"
       },
       {
-        "pagePath": "pages/template/index",
+        "pagePath": "pages/mine/index",
         "iconPath": "static/uview/example/template.png",
         "selectedIconPath": "static/uview/example/template_select.png",
-        "text": "模板"
+        "text": "我的"
       }
     ]
   }
