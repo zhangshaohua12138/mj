@@ -44,7 +44,7 @@
           </div>
         </view>
 
-        <u-button @click="show = true">预订</u-button>
+        <u-button @click="showTime">预订</u-button>
       </view>
     </u-card>
     <u-picker
@@ -54,9 +54,9 @@
       @confirm="confirm"
     ></u-picker>
     <view
-      >结束时间:年{{ endTimes.year }}月{{ endTimes.month }}日{{
-        endTimes.date
-      }}时{{ endTimes.hour }}</view
+      >结束时间:{{ endTimes.year }}年{{ endTimes.month }}月{{
+        endTimes.day
+      }}日{{ endTimes.hour }}时</view
     >
   </view>
 </template>
@@ -66,6 +66,7 @@ export default {
   data() {
     return {
       a: 0,
+      b: 0,
       endTimes: {
         year: "",
         month: "",
@@ -93,6 +94,16 @@ export default {
     };
   },
   methods: {
+    showTime() {
+      (this.endTimes = {
+        year: "",
+        month: "",
+        day: "",
+        hour: "",
+        minute: "",
+      }),
+        (this.show = true);
+    },
     numberClick(item) {
       this.numbers = item;
       this.a = this.timeList[item];
@@ -101,25 +112,20 @@ export default {
     confirm(e) {
       console.log(e);
       console.log("1111");
-      this.a = this.a * 3600;
-      console.log(this.a, "a");
-      this.endTime = Number(e.timestamp) + Number(this.a);
+      this.endTime = Number(e.timestamp) + Number(this.a * 3600);
       console.log(this.endTime, "endTime");
       this.ty(this.endTime);
+      this.endTime = "";
     },
     ty(time) {
       console.log(time, "time");
       var data = new Date(time * 1000);
-      var year = data.getFullYear() + "";
-      console.log(year, "year") + "";
-      var month = data.getMonth() + 1;
-      var date = data.getDate() + "";
-      var hour = data.getHours() + "";
-      var minute = data.getMinutes() + "";
-      var second = data.getSeconds() + "";
-      var SS = year + month + date + hour + minute + second;
-      console.log(SS, "SS");
-      return SS;
+      this.endTimes.year = data.getFullYear() + "";
+      this.endTimes.month = data.getMonth() + 1;
+      this.endTimes.day = data.getDate() + "";
+      this.endTimes.hour = data.getHours() + "";
+      this.endTimes.minute = data.getMinutes() + "";
+      this.endTimes.second = data.getSeconds() + "";
     },
   },
 };
