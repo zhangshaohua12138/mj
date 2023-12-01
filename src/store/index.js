@@ -16,7 +16,7 @@ export default new Vuex.Store({
         selectedIconPath: "/static/uview/example/js_select.png",
         text: "扫码",
         midButton: true,
-        pagePath: "/pages/js/index",
+        pagePath: "/pages/scan/index",
       },
       {
         iconPath: "/static/uview/example/template.png",
@@ -25,6 +25,10 @@ export default new Vuex.Store({
         pagePath: "/pages/mine/index",
       },
     ],
+
+    background: {
+      backgroundColor: "cornflowerblue",
+    },
   },
   mutations: {},
   actions: {},

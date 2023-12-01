@@ -39,7 +39,7 @@
             <u-col span="1"><u-icon name="lock-fill"></u-icon></u-col>
           </u-row>
         </view>
-        <view>
+        <view style="margin-top: 20rpx">
           <u-row>
             <u-col span="1" v-for="count in 12" :key="count">
               <view class="col-l">
@@ -57,7 +57,7 @@
           </u-row>
         </view>
 
-        <view style="display: flex; align-items: center">
+        <view style="display: flex; align-items: center; margin-top: 20rpx">
           <div>时长选择：</div>
           <div
             class="tags"
@@ -79,21 +79,35 @@
       :params="params"
       @confirm="confirm"
     ></u-picker>
-    <view v-if="endTimes.year">
-      <view
-        >开始时间：{{ startTimes.year }}年{{ startTimes.month }}月{{
-          startTimes.day
-        }}日{{ startTimes.hour }}时</view
-      >
-      <view
-        >结束时间：{{ endTimes.year }}年{{ endTimes.month }}月{{
-          endTimes.day
-        }}日{{ endTimes.hour }}时</view
-      >
+    <!-- <view v-if="endTimes.year"> -->
+    <view
+      >开始时间：{{ startTimes.year }}年{{ startTimes.month }}月{{
+        startTimes.day
+      }}日{{ startTimes.hour }}时</view
+    >
+    <view
+      >结束时间：{{ endTimes.year }}年{{ endTimes.month }}月{{
+        endTimes.day
+      }}日{{ endTimes.hour }}时</view
+    >
+
+    <!-- </view> -->
+    <u-card title="注意事项">
+      <view slot="body">
+        <u-parse :html="content"></u-parse>
+      </view>
+    </u-card>
+
+    <view style="height: 150rpx">
+      <view class="bookingButton">
+        <u-button
+          :custom-style="customStyle"
+          :ripple="true"
+          ripple-bg-color="#859900"
+          >预订</u-button
+        >
+      </view>
     </view>
-
-
-    <!-- 选择时间 -->
   </view>
 </template>
 
@@ -117,9 +131,7 @@ export default {
       timeList: ["4", "6", "8", "12"],
       endTime: "",
       numbers: "-1",
-      background: {
-        backgroundColor: "cornflowerblue",
-      },
+      background: "",
       title: "房间号 101",
       show: false,
       params: {
@@ -131,6 +143,23 @@ export default {
         second: false,
         timestamp: true,
       },
+      customStyle: {
+        // marginTop: "20px", // 注意驼峰命名，并且值必须用引号包括，因为这是对象
+        backgroundColor: "cornflowerblue",
+        color: "white",
+        fontSize: "30rpx",
+        borderRadius: "0rpx",
+      },
+      content: `
+				<h1>欢迎入住</h1>
+				<p>1.禁止吸烟</p>
+				<p>2.禁止带宠物</p>
+				<p>3.禁止带儿童</p>
+				<p>4.禁止带行李</p>
+				<p>5.禁止带宠物</p>
+					<p>露从今夜白，月是故乡明</p>
+					<img src="https://cdn.uviewui.com/uview/swiper/2.jpg" />
+				`,
     };
   },
   methods: {
@@ -169,10 +198,20 @@ export default {
       };
     },
   },
+  onLoad(options) {
+    this.background = this.$store.state.background;
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.bookingButton {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
 .col-l {
   text-align: center;
 }

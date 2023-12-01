@@ -1,5 +1,12 @@
 <template>
   <view>
+    <u-navbar
+      title="首页"
+      :background="background"
+      title-color="white"
+      back-icon-color="white"
+      :is-back="flase"
+    ></u-navbar>
     <u-swiper :list="list" :effect3d="true" mode="none"></u-swiper>
     <u-card title="XXXX">
       <view slot="body">
@@ -13,7 +20,7 @@
               <u-icon name="map-fill"></u-icon>
               <view>导航</view>
             </view>
-            <view class="t-i">
+            <view class="t-i" @click="callPhone">
               <u-icon name="phone-fill"></u-icon>
               <view>电话</view>
             </view>
@@ -82,6 +89,7 @@ export default {
   data() {
     return {
       tabbar: "",
+      background: "",
       list: [
         {
           image: "https://cdn.uviewui.com/uview/swiper/1.jpg",
@@ -101,11 +109,17 @@ export default {
   },
   onLoad() {
     this.tabbar = this.$store.state.tabbar;
+    this.background = this.$store.state.background;
   },
   methods: {
     goto() {
       uni.navigateTo({
         url: "/pages/roomDetails/index",
+      });
+    },
+    callPhone() {
+      uni.makePhoneCall({
+        phoneNumber: "17382807713",
       });
     },
   },
