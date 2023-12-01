@@ -31,6 +31,32 @@
 
     <u-card title="预定情况">
       <view slot="body">
+        <view>
+          <u-row>
+            <u-col span="2">未预订</u-col>
+            <u-col span="1"><u-icon name="lock-open"></u-icon></u-col>
+            <u-col span="2">已预订</u-col>
+            <u-col span="1"><u-icon name="lock-fill"></u-icon></u-col>
+          </u-row>
+        </view>
+        <view>
+          <u-row>
+            <u-col span="1" v-for="count in 12" :key="count">
+              <view class="col-l">
+                <u-icon name="lock-open"></u-icon>
+                <view>{{ count }}</view>
+              </view>
+            </u-col>
+
+            <u-col span="1" v-for="count1 in 12" :key="count1">
+              <view class="col-l">
+                <u-icon name="lock-open"></u-icon>
+                <view>{{ count1 + 12 }}</view>
+              </view>
+            </u-col>
+          </u-row>
+        </view>
+
         <view style="display: flex; align-items: center">
           <div>时长选择：</div>
           <div
@@ -44,7 +70,7 @@
           </div>
         </view>
 
-        <u-button @click="showTime">预订</u-button>
+        <u-button @click="showTime" v-if="chooseHour">预订</u-button>
       </view>
     </u-card>
     <u-picker
@@ -53,11 +79,21 @@
       :params="params"
       @confirm="confirm"
     ></u-picker>
-    <view
-      >结束时间:{{ endTimes.year }}年{{ endTimes.month }}月{{
-        endTimes.day
-      }}日{{ endTimes.hour }}时</view
-    >
+    <view v-if="endTimes.year">
+      <view
+        >开始时间：{{ startTimes.year }}年{{ startTimes.month }}月{{
+          startTimes.day
+        }}日{{ startTimes.hour }}时</view
+      >
+      <view
+        >结束时间：{{ endTimes.year }}年{{ endTimes.month }}月{{
+          endTimes.day
+        }}日{{ endTimes.hour }}时</view
+      >
+    </view>
+
+
+    <!-- 选择时间 -->
   </view>
 </template>
 
@@ -65,18 +101,22 @@
 export default {
   data() {
     return {
-      a: 0,
-      b: 0,
+      chooseHour: "",
       endTimes: {
         year: "",
         month: "",
         day: "",
         hour: "",
-        minute: "",
+      },
+      startTimes: {
+        year: "",
+        month: "",
+        day: "",
+        hour: "",
       },
       timeList: ["4", "6", "8", "12"],
       endTime: "",
-      numbers: "1",
+      numbers: "-1",
       background: {
         backgroundColor: "cornflowerblue",
       },
@@ -106,32 +146,36 @@ export default {
     },
     numberClick(item) {
       this.numbers = item;
-      this.a = this.timeList[item];
-      console.log(this.a, "a");
+      this.chooseHour = this.timeList[item];
     },
     confirm(e) {
-      console.log(e);
-      console.log("1111");
-      this.endTime = Number(e.timestamp) + Number(this.a * 3600);
-      console.log(this.endTime, "endTime");
-      this.ty(this.endTime);
-      this.endTime = "";
-    },
-    ty(time) {
-      console.log(time, "time");
-      var data = new Date(time * 1000);
-      this.endTimes.year = data.getFullYear() + "";
-      this.endTimes.month = data.getMonth() + 1;
-      this.endTimes.day = data.getDate() + "";
-      this.endTimes.hour = data.getHours() + "";
-      this.endTimes.minute = data.getMinutes() + "";
-      this.endTimes.second = data.getSeconds() + "";
+      this.startTimes = {
+        day: e.day,
+        hour: e.hour,
+        minute: e.minute,
+        second: e.second,
+        year: e.year,
+        month: e.month,
+      };
+
+      let comTime = e.timestamp * 1000 + Number(this.chooseHour) * 3600 * 1000;
+      var newDate = new Date();
+      newDate.setTime(comTime);
+      this.endTimes = {
+        day: newDate.getDate().toString().padStart(2, "0"),
+        hour: newDate.getHours().toString().padStart(2, "0"),
+        month: (newDate.getMonth() + 1).toString().padStart(2, "0"),
+        year: newDate.getFullYear(),
+      };
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.col-l {
+  text-align: center;
+}
 .aaab {
   color: red;
 }
